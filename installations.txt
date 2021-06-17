@@ -1,0 +1,10 @@
+created environment 'Penny' in anaconda GUI.
+
+
+Then in Git Bash terminal I did the following installations:
+
+conda install pandas
+python -m pip install -U matplotlib
+pip install sqlalchemy
+conda install -c anaconda psycopg2
+pip install PyQt5
