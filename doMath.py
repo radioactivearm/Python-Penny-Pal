@@ -4,9 +4,10 @@ def doMath(text):
     try:
         number = float(text)
         square = np.sqrt(number)
-        return str(square)
+        rounded = round(square, 3)
+        return str(rounded)
     except:
-        return f'{text} is not a number'
+        return 'NAN'
     # number = float(text)
     # square = np.sqrt(number)
     # return str(square)

@@ -1,67 +1,65 @@
-# # Starting with creating a simple window
-
-# import sys
-# from PyQt5.QtWidgets import QApplication, QWidget
-
-# app = QApplication(sys.argv)
-
-# window = QWidget()
-# # window.setGeometry(0, 0, 1000, 600)
-# window.setWindowTitle("Python-Penny-Pal")
-
-# window.show()
-
-# app.exec()
-
-# ==============================================================================================================
-# Still learning how to use PyQt5
-# https://pythonspot.com/pyqt5-textbox-example/
+# making my own basic window
 
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import pyqtSlot
-
-import numpy as np
-
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QPushButton, QLabel, QLineEdit
 from doMath import doMath
 
-class App(QMainWindow):
+class MainWindow(QMainWindow):
 
     def __init__(self):
-        super().__init__()
-        self.title = 'Python-Penny-Pal'
-        self.left = 10
-        self.top = 10
-        self.width = 1000
-        self.height = 700
-        self.initUI()
-    
-    def initUI(self):
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-    
-        # Create textbox
-        self.textbox = QLineEdit(self)
-        self.textbox.move(200, 200)
-        self.textbox.resize(600,100)
-        
-        # Create a button in the window
-        self.button = QPushButton('Show text', self)
-        self.button.move(200,300)
-        self.button.resize(600,100)
-        
-        # connect button to function on_click
-        self.button.clicked.connect(self.on_click)
-        self.show()
-    
-    @pyqtSlot()
-    def on_click(self):
-        textboxValue = self.textbox.text()
-        QMessageBox.question(self, 'Python-Penny-Pal', "Sqrt of " + textboxValue +": " + doMath(textboxValue), QMessageBox.Ok, QMessageBox.Ok)
-        self.textbox.setText("")
+        super(MainWindow, self).__init__()
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = App()
-    sys.exit(app.exec_())
+        self.setWindowTitle("Python-Penny-Pal")
+        self.setMinimumSize(1000, 800)
+
+        layout = QGridLayout()
+
+        self.button = QPushButton("Enter")
+
+        self.line = QLineEdit()
+        self.line.setMaxLength(21)
+        self.line.setPlaceholderText("Enter a number, I'll sqrt it!")
+
+        self.label = QLabel("Hello")
+        font =  self.label.font()
+        font.setPointSize(60)
+        self.label.setFont(font)
+        self.label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+
+        layout.addWidget(self.line, 0, 0)
+        layout.addWidget(self.button, 1, 0)
+        layout.addWidget(self.label, 2, 0)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
+
+        self.button.clicked.connect(self.onClick)
+
+    def onClick(self):
+        print(doMath(self.line.text()))
+        self.label.setText(doMath(self.line.text()))
+        
+        #print(self.button_is_checked)
+        
+
+
+
+
+
+
+        #button.clicked.connect(label.setText(doMath(line.text())))
+
+    #    button.clicked.connect(self.squares(line))
+
+    #def squares(self, line):
+    #    return domath(line.text())
+
+
+app = QApplication(sys.argv)
+
+window = MainWindow()
+window.show()
+
+app.exec()
