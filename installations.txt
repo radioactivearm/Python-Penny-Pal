@@ -8,3 +8,4 @@ python -m pip install -U matplotlib
 pip install sqlalchemy
 conda install -c anaconda psycopg2
 pip install PyQt5
+pip install Flask
